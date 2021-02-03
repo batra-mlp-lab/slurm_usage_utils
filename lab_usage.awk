@@ -1,5 +1,5 @@
 #!/bin/awk -f
-@include "/nethome/nmodhe3/rcfiles/shell/mycolors.awk"
+@include "mycolors.awk"
 
 function print_row_separator()
 {
