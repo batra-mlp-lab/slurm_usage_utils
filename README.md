@@ -5,7 +5,7 @@ Helpful functions for tracking GPU/CPU usage in SLURM managed clusters.
 
 Clone the repository to your home directory or otherwise.
 
-Add the following lines to your `.bashrc`, change the location of the `.gpus_users.bashrc` file based on where you cloned the repository.
+Add the following lines to your `.bashrc`, change the location of the `.gpus_users.bashrc` file based on where you cloned the repository. The paths to each `.awk` file in `gpus_users.bashrc` will also have to be modified if a different clone directory is chosen.
 
 ```
 if [ -f ~/slurm_usage_utils/gpus_users.bashrc ]; then
