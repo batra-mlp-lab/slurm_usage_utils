@@ -68,7 +68,12 @@ END {
                 cpu_per_gpu_use_str = "-"
                 if (gpu_counts[name]["R"] > 0){
                     cpu_per_gpu_use = (1.0*cpu_counts[name]["R"]) / gpu_counts[name]["R"]
-                    cpu_per_gpu_use_str = sprintf("%.1f", cpu_per_gpu_use)
+                    # cpu_per_gpu_use_str = sprintf("%.1f", cpu_per_gpu_use)
+                    if (cpu_per_gpu_use >= 10.0) {
+                        cpu_per_gpu_use_str = sprintf("%d", cpu_per_gpu_use)
+                    } else {
+                        cpu_per_gpu_use_str = sprintf("%.1f", cpu_per_gpu_use)
+                    }
 
                     run_str = sprintf(\
                         " %s (%s) |",\
