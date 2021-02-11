@@ -13,6 +13,14 @@ if [ -f ~/slurm_usage_utils/gpus_users.bashrc ]; then
 fi
 ```
 
+In the following files, change the `@include mycolors.awk` line so that it has the absolute path of your `mycolors.awk` file from this repository:
+```
+lab_usage.awk
+lab_usage_qos.awk
+lab_usage_verbose.awk
+node_usage.awk
+```
+
 Reload your `.bashrc` with `source ~/.bashrc`.
 
 ## Usage
