@@ -13,20 +13,20 @@ BEGIN {
 }
 {
     if ($1 == "G>") {
-        gpu_counts[$2][$3]+=$6;
-        gpu_counts[$2][$3,$4]+=$6;
+        gpu_counts[$2][$3]+=$12;
+        gpu_counts[$2][$3,$4]+=$12;
 
         gpu_counts[$2]["R"]+=0;
         gpu_counts[$2]["R","normal"]+=0;
         gpu_counts[$2]["R","overcap"]+=0;
 
-        labs_to_gpus_used[user_to_lab[$2]][$3]+=$6;
-        lab_totals[user_to_lab[$2]][$3]+=$6;
-        lab_totals[user_to_lab[$2]][$3,$4]+=$6;
+        labs_to_gpus_used[user_to_lab[$2]][$3]+=$12;
+        lab_totals[user_to_lab[$2]][$3]+=$12;
+        lab_totals[user_to_lab[$2]][$3,$4]+=$12;
 
     } else {
         if ($5 == "gres/gpu") {
-            labs_to_gpus[$1] += $6;
+            labs_to_gpus[$1] += $12;
             labs_to_cpus[$1] += $4;
         } else {
             if ($1 != "overcap") {
