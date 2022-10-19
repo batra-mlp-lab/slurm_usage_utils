@@ -23,8 +23,8 @@ BEGIN {
 }
 {
     if ($1 == "G>") {
-        gpu_counts[$2][$3]+=$6;
-        gpu_counts[$2][$3,$4]+=$6;
+        gpu_counts[$2][$3]+=$12;
+        gpu_counts[$2][$3,$4]+=$12;
 
         gpu_counts[$2]["R"]+=0;
         gpu_counts[$2]["PD"]+=0;
@@ -37,12 +37,12 @@ BEGIN {
         cpu_counts[$2]["PD"]+=0;
         cpu_counts[$2]["CG"]+=0;
 
-        labs_to_gpus_used[user_to_lab[$2]][$3]+=$6;
+        labs_to_gpus_used[user_to_lab[$2]][$3]+=$12;
         labs_to_cpus_used[user_to_lab[$2]][$3]+=$7;
 
     } else {
         if ($5 == "gres/gpu") {
-            labs_to_gpus[$1] += $6;
+            labs_to_gpus[$1] += $12;
             labs_to_cpus[$1] += $4;
         } else {
             if ($1 != "overcap") {

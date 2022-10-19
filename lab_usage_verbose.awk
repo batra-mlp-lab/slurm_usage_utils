@@ -27,8 +27,8 @@ BEGIN {
 {
     if ($1 == "G>") {
         # GPU Counts
-        gpu_counts[$2][$3]+=$6;
-        gpu_counts[$2][$3,$4]+=$6;
+        gpu_counts[$2][$3]+=$12;
+        gpu_counts[$2][$3,$4]+=$12;
 
         gpu_counts[$2]["R"]+=0;
         gpu_counts[$2]["PD"]+=0;
@@ -42,8 +42,8 @@ BEGIN {
         gpu_counts[$2]["CG","overcap"]+=0;
 
         # CPU counts
-        cpu_counts[$2][$3]+=$7;
-        cpu_counts[$2][$3,$4]+=$7;
+        cpu_counts[$2][$3]+=$6;
+        cpu_counts[$2][$3,$4]+=$6;
 
         cpu_counts[$2]["R"]+=0;
         cpu_counts[$2]["PD"]+=0;
@@ -56,14 +56,14 @@ BEGIN {
         cpu_counts[$2]["PD","overcap"]+=0;
         cpu_counts[$2]["CG","overcap"]+=0;
 
-        labs_to_gpus_used[user_to_lab[$2]][$3]+=$6;
-        labs_to_cpus_used[user_to_lab[$2]][$3]+=$7;
+        labs_to_gpus_used[user_to_lab[$2]][$3]+=$12;
+        labs_to_cpus_used[user_to_lab[$2]][$3]+=$6;
 
-        lab_gpu_totals[user_to_lab[$2]][$3]+=$6;
-        lab_cpu_totals[user_to_lab[$2]][$3]+=$7;
+        lab_gpu_totals[user_to_lab[$2]][$3]+=$12;
+        lab_cpu_totals[user_to_lab[$2]][$3]+=$6;
 
-        lab_gpu_totals[user_to_lab[$2]][$3,$4]+=$6;
-        lab_cpu_totals[user_to_lab[$2]][$3,$4]+=$7;
+        lab_gpu_totals[user_to_lab[$2]][$3,$4]+=$12;
+        lab_cpu_totals[user_to_lab[$2]][$3,$4]+=$6;
 
     } else {
         if ($5 == "gres/gpu") {
