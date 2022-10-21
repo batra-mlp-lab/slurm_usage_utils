@@ -26,44 +26,51 @@ BEGIN {
 }
 {
     if ($1 == "G>") {
+        # for overcap jobs, assign lab arbitrarily
+        if ($14 == "overcap"){
+            lab=user_to_lab[$2]
+        }
+        else {
+            lab=$13
+        }
         # GPU Counts
-        gpu_counts[$2][$3]+=$12;
-        gpu_counts[$2][$3,$4]+=$12;
+        gpu_counts[lab][$2][$3]+=$12;
+        gpu_counts[lab][$2][$3,$4]+=$12;
 
-        gpu_counts[$2]["R"]+=0;
-        gpu_counts[$2]["PD"]+=0;
-        gpu_counts[$2]["CG"]+=0;
+        gpu_counts[lab][$2]["R"]+=0;
+        gpu_counts[lab][$2]["PD"]+=0;
+        gpu_counts[lab][$2]["CG"]+=0;
 
-        gpu_counts[$2]["R","normal"]+=0;
-        gpu_counts[$2]["PD","normal"]+=0;
-        gpu_counts[$2]["CG","normal"]+=0;
-        gpu_counts[$2]["R","overcap"]+=0;
-        gpu_counts[$2]["PD","overcap"]+=0;
-        gpu_counts[$2]["CG","overcap"]+=0;
+        gpu_counts[lab][$2]["R","normal"]+=0;
+        gpu_counts[lab][$2]["PD","normal"]+=0;
+        gpu_counts[lab][$2]["CG","normal"]+=0;
+        gpu_counts[lab][$2]["R","overcap"]+=0;
+        gpu_counts[lab][$2]["PD","overcap"]+=0;
+        gpu_counts[lab][$2]["CG","overcap"]+=0;
 
         # CPU counts
-        cpu_counts[$2][$3]+=$6;
-        cpu_counts[$2][$3,$4]+=$6;
+        cpu_counts[lab][$2][$3]+=$6;
+        cpu_counts[lab][$2][$3,$4]+=$6;
 
-        cpu_counts[$2]["R"]+=0;
-        cpu_counts[$2]["PD"]+=0;
-        cpu_counts[$2]["CG"]+=0;
+        cpu_counts[lab][$2]["R"]+=0;
+        cpu_counts[lab][$2]["PD"]+=0;
+        cpu_counts[lab][$2]["CG"]+=0;
 
-        cpu_counts[$2]["R","normal"]+=0;
-        cpu_counts[$2]["PD","normal"]+=0;
-        cpu_counts[$2]["CG","normal"]+=0;
-        cpu_counts[$2]["R","overcap"]+=0;
-        cpu_counts[$2]["PD","overcap"]+=0;
-        cpu_counts[$2]["CG","overcap"]+=0;
+        cpu_counts[lab][$2]["R","normal"]+=0;
+        cpu_counts[lab][$2]["PD","normal"]+=0;
+        cpu_counts[lab][$2]["CG","normal"]+=0;
+        cpu_counts[lab][$2]["R","overcap"]+=0;
+        cpu_counts[lab][$2]["PD","overcap"]+=0;
+        cpu_counts[lab][$2]["CG","overcap"]+=0;
 
-        labs_to_gpus_used[user_to_lab[$2]][$3]+=$12;
-        labs_to_cpus_used[user_to_lab[$2]][$3]+=$6;
+        labs_to_gpus_used[lab][$3]+=$12;
+        labs_to_cpus_used[lab][$3]+=$6;
 
-        lab_gpu_totals[user_to_lab[$2]][$3]+=$12;
-        lab_cpu_totals[user_to_lab[$2]][$3]+=$6;
+        lab_gpu_totals[lab][$3]+=$12;
+        lab_cpu_totals[lab][$3]+=$6;
 
-        lab_gpu_totals[user_to_lab[$2]][$3,$4]+=$12;
-        lab_cpu_totals[user_to_lab[$2]][$3,$4]+=$6;
+        lab_gpu_totals[lab][$3,$4]+=$12;
+        lab_cpu_totals[lab][$3,$4]+=$6;
 
     } else {
         if ($5 == "gres/gpu") {
@@ -87,32 +94,32 @@ END {
             labs_to_gpus_used[lab]["PD"],
             labs_to_gpus[lab])
         printf("| %14s = %-51s |\n", lab, print_str);
-        for (name in gpu_counts){
-            if (user_to_lab[name] == lab) {
+        if (lab in gpu_counts) {
+            for (name in gpu_counts[lab]) {
                 printf("| %14s |",name);
-                # printf(" %3d |",gpu_counts[name]["R","normal"]);
-                # printf(" %3d |",gpu_counts[name]["PD","normal"]);
-                # printf(" %3d |",gpu_counts[name]["CG","normal"]);
+                # printf(" %3d |",gpu_counts[lab][name]["R","normal"]);
+                # printf(" %3d |",gpu_counts[lab][name]["PD","normal"]);
+                # printf(" %3d |",gpu_counts[lab][name]["CG","normal"]);
                 #
-                # printf(" %3d |",gpu_counts[name]["R","overcap"]);
-                # printf(" %3d |",gpu_counts[name]["PD","overcap"]);
-                # printf(" %3d |",gpu_counts[name]["CG","overcap"]);
+                # printf(" %3d |",gpu_counts[lab][name]["R","overcap"]);
+                # printf(" %3d |",gpu_counts[lab][name]["PD","overcap"]);
+                # printf(" %3d |",gpu_counts[lab][name]["CG","overcap"]);
                 #
-                # printf(" %3d |",gpu_counts[name]["R"]);
-                # printf(" %3d |",gpu_counts[name]["PD"]);
-                # printf(" %3d |",gpu_counts[name]["CG"]);
+                # printf(" %3d |",gpu_counts[lab][name]["R"]);
+                # printf(" %3d |",gpu_counts[lab][name]["PD"]);
+                # printf(" %3d |",gpu_counts[lab][name]["CG"]);
 
-                printf(" %s |",colour_int(gpu_counts[name]["R","normal"]));
-                printf(" %s |",colour_int(gpu_counts[name]["PD","normal"]));
-                printf(" %s |",colour_int(gpu_counts[name]["CG","normal"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["R","normal"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["PD","normal"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["CG","normal"]));
 
-                printf(" %s |",colour_int(gpu_counts[name]["R","overcap"]));
-                printf(" %s |",colour_int(gpu_counts[name]["PD","overcap"]));
-                printf(" %s |",colour_int(gpu_counts[name]["CG","overcap"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["R","overcap"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["PD","overcap"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["CG","overcap"]));
 
-                printf(" %s |",colour_int(gpu_counts[name]["R"]));
-                printf(" %s |",colour_int(gpu_counts[name]["PD"]));
-                printf(" %s |",colour_int(gpu_counts[name]["CG"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["R"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["PD"]));
+                printf(" %s |",colour_int(gpu_counts[lab][name]["CG"]));
 
                 printf("\n");
             }

@@ -2,7 +2,7 @@
 usage_by_lab() {
     {
         sacctmgr -nop show assoc format=account,user,grptres | grep -v 'root' | grep -v 'test-lab';
-        squeue -O "UserName,StateCompact,QOS,tres-alloc:1000" -h | tr -s " " | awk '$0="G> "$0' | grep gpu | sort;
+        squeue -O "UserName,StateCompact,QOS,tres-alloc:1000,Account,Partition" -h | tr -s " " | awk '$0="G> "$0' | grep gpu | sort;
     } | awk -f $1 -
 }
 usage_by_node() {
