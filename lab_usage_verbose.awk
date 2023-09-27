@@ -29,13 +29,15 @@ BEGIN {
         # for overcap jobs, assign lab arbitrarily
         if ($14 == "overcap"){
             lab=user_to_lab[$2]
+            partition="overcap"
         }
         else {
             lab=$13
+            partition="normal"
         }
         # GPU Counts
         gpu_counts[lab][$2][$3]+=$12;
-        gpu_counts[lab][$2][$3,$4]+=$12;
+        gpu_counts[lab][$2][$3,partition]+=$12;
 
         gpu_counts[lab][$2]["R"]+=0;
         gpu_counts[lab][$2]["PD"]+=0;
@@ -50,7 +52,7 @@ BEGIN {
 
         # CPU counts
         cpu_counts[lab][$2][$3]+=$6;
-        cpu_counts[lab][$2][$3,$4]+=$6;
+        cpu_counts[lab][$2][$3,partition]+=$6;
 
         cpu_counts[lab][$2]["R"]+=0;
         cpu_counts[lab][$2]["PD"]+=0;
@@ -69,8 +71,8 @@ BEGIN {
         lab_gpu_totals[lab][$3]+=$12;
         lab_cpu_totals[lab][$3]+=$6;
 
-        lab_gpu_totals[lab][$3,$4]+=$12;
-        lab_cpu_totals[lab][$3,$4]+=$6;
+        lab_gpu_totals[lab][$3,partition]+=$12;
+        lab_cpu_totals[lab][$3,partition]+=$6;
 
     } else {
         if ($5 == "gres/gpu") {
