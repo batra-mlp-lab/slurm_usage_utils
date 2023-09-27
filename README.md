@@ -19,6 +19,8 @@ lab_usage.awk
 lab_usage_qos.awk
 lab_usage_verbose.awk
 node_usage.awk
+gpu_types_usage.awk
+gpu_types_usage_verbose.awk
 ```
 
 Reload your `.bashrc` with `source ~/.bashrc`.
