@@ -1,5 +1,5 @@
 #!/bin/awk -f
-@include "mycolors.awk"
+@include "/nethome/mxu87/slurm_usage_utils/mycolors.awk"
 
 BEGIN {
     FS="[ :|=*]";

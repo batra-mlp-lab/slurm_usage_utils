@@ -1,5 +1,5 @@
 #!/bin/awk -f
-@include "mycolors.awk"
+@include "/nethome/mxu87/slurm_usage_utils/mycolors.awk"
 
 BEGIN {
     FS="[ :|=,]";
@@ -89,6 +89,11 @@ END {
     for (lab in labs_to_gpus) {
         if (lab == "guest-lab") {
             continue;
+        }
+        if (length(labfilter) != 0) {
+            if (substr(lab, 0, length(lab)-4) != substr(labfilter,3)) {
+                continue;
+            }
         }
         print_str = sprintf(\
             "[ %d / %d / %d (Run/Sched/Total) GPUS]",
