@@ -90,6 +90,11 @@ END {
         if (lab == "guest-lab") {
             continue;
         }
+        if (length(labfilter) != 0) {
+            if (substr(lab, 0, length(lab)-4) != substr(labfilter,3)) {
+                continue;
+            }
+        }
         print_str = sprintf(\
             "[ %d / %d / %d (Run/Sched/Total) GPUS]",
             labs_to_gpus_used[lab]["R"],

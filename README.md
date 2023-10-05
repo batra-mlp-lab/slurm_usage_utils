@@ -37,3 +37,11 @@ gpus_users -v
 # Summary of node usage
 node_usage
 ```
+
+Any of the gpu_users command can be followed up with a lab (e.g. cvmlp, rehg, hoffman, etc.) to filter for the usage only in that lab, i.e.
+
+```
+gpus_users --cvmlp
+gpus_users -q --cvmlp
+gpus_users -v --cvmlp
+```

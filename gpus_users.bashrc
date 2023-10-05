@@ -3,7 +3,7 @@ usage_by_lab() {
     {
         sacctmgr -nop show assoc format=account,user,grptres | grep -v 'root' | grep -v 'test-lab';
         squeue -O "UserName,StateCompact,QOS,tres-alloc:1000,Account,Partition" -h | tr -s " " | awk '$0="G> "$0' | grep gpu | sort;
-    } | awk -f $1 -
+    } | awk  -v labfilter="$2" -f $1 -
 }
 
 usage_by_node() {
@@ -16,15 +16,14 @@ usage_by_node_type() {
     } | awk -f $1 -
 }
 
+
 gpus_users() {
-    if [ $# -eq 1 ]; then
-        if [[ $1 == "-q" ]]; then
-            usage_by_lab ~/slurm_usage_utils/lab_usage_qos.awk
-        elif [[ $1 == "-v" ]]; then
-            usage_by_lab ~/slurm_usage_utils/lab_usage_verbose.awk
-        fi
+    if [[ $1 == "-q" ]]; then
+        usage_by_lab ~/slurm_usage_utils/lab_usage_qos.awk $2
+    elif [[ $1 == "-v" ]]; then
+        usage_by_lab ~/slurm_usage_utils/lab_usage_verbose.awk $2
     else
-        usage_by_lab ~/slurm_usage_utils/lab_usage.awk
+        usage_by_lab ~/slurm_usage_utils/lab_usage.awk $1
     fi
 }
 
