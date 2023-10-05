@@ -1,5 +1,5 @@
 #!/bin/awk -f
-@include "/nethome/mxu87/slurm_usage_utils/mycolors.awk"
+@include "mycolors.awk"
 
 function print_row_separator()
 {
